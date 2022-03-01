@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml" >
+    <head th:replace="layout/plantilla ::head" >
+        <title>TODO supply a title</title>
+    </head>
+    <body>
+        <header th:replace="layout/plantilla ::header"></header>
+
+        <div class="container mt-3">
+
+            <div class="row mt-3" >
+
+                <div class="col d-flex justify-content-around">
+                    <div class="input-group-prepend">
+                        <h4 class="" ><b>Codigo Empleado:</b></h4>
+                    </div>
+                    <h4 th:name="id_empleado" th:text="${id_empleado}" class="mr-2"></h4> <!-- CODIGO EMPLEADO -->
+
+                    <div class="input-group-prepend">
+                        <h4 class="" ><b>Nombre Empleado:</b></h4>
+                    </div>
+                    <h4 th:name="nombre_empleado" th:text="${nombre_empleado}" class="mr-2"></h4> <!-- NOMBRE EMPLEADO -->
+
+                    <div class="input-group-prepend">
+                        <h4 class="" ><b>Fecha Ingreso:</b></h4>
+                    </div>
+                    <h4 th:name="salario_base" th:text="${fecha_ingreso}" class="mr-2"></h4> <!-- SALARIO BASE  th:text="${new java.text.DecimalFormat('#,##0.00').format(salario_base)}"  -->   
+
+                </div>
+
+            </div>
+
+            <div class="row mt-5">
+                <div class="col">
+                    <form method="Post" th:action="@{/guardarInfoAcademica}" th:object="${titulos}" >
+                        <div class="form-group">
+                            <label for="nombre_certificado" class="form-label" >Título Obtenido:</label>
+                            <input type="text" maxlength="25" name="nombre_certificado" class="form-control" th:field="*{nombre_certificado}"/> <!-- con el asterisco accede a los datos del objeto cliente  -->
+                            <span class="font-italic text-danger" th:if="${#fields.hasErrors('nombre_certificado')}" th:errors="*{nombre_certificado}"></span> <!--AQUI SE VALIDA QUE EL TEXTO TENGA LOS CAMPOS CORRECTOS -->
+                        </div>
+                        <div class="form-group">
+                            <label for="nombre_institucion" class="form-label" >Nombre Institución:</label>
+                            <input type="text" maxlength="25" name="nombre_institucion" class="form-control" th:field="*{nombre_institucion}"/> <!-- con el asterisco accede a los datos del objeto cliente  -->
+                            <span class="font-italic text-danger" th:if="${#fields.hasErrors('nombre_institucion')}" th:errors="*{nombre_institucion}"></span> <!--AQUI SE VALIDA QUE EL TEXTO TENGA LOS CAMPOS CORRECTOS -->
+                        </div>
+
+                        <div class="form-group">
+                            <label for="anio_graduacion" class="form-label" >Año Graduación:</label>
+                            <input type="number" name="anio_graduacion" class="form-control" th:field="*{anio_graduacion}"/> <!-- con el asterisco accede a los datos del objeto cliente  -->
+                            <span class="font-italic text-danger" th:if="${#fields.hasErrors('anio_graduacion')}" th:errors="*{anio_graduacion}"></span> <!--AQUI SE VALIDA QUE EL TEXTO TENGA LOS CAMPOS CORRECTOS -->
+                        </div>
+
+                        <div class="form-group col d-flex justify-content-start">
+                            <label for="grado_academico" class="form-label mr-5" >Grado Académico:</label>
+                            <select name="grado_academico" class="form-control col-3" th:field="*{grado_academico}" >
+                                <option th:value=" '1' " th:selected='true'  >Técnico</option> <!---el th:value le asigna el valor a el th:field *tipo de la factura -->
+                                <option th:value=" '2' " >Diplomado</option> <!---el th:value le asigna el valor a el th:field *tipo de la factura -->
+                                <option th:value=" '3' " >Bachillerato</option> <!---el th:value le asigna el valor a el th:field *tipo de la factura -->
+                                <option th:value=" '4' " >Licenciatura</option> <!---el th:value le asigna el valor a el th:field *tipo de la factura -->
+                                <option th:value=" '5' " >Maestría</option> <!---el th:value le asigna el valor a el th:field *tipo de la factura -->
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="submit" value="Guardar Título" class="btn btn-primary mt-3" name="guardar"/>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <hr/>
+
+
+
+        </div>
+
+
+    </body>
+</html>

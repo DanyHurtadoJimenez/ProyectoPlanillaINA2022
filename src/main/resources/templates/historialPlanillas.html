@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml">
+    <head th:replace="layout/plantilla ::head" >
+        <title>TODO supply a title</title>
+    </head>
+    <body>
+        <header th:replace="layout/plantilla ::header"></header>
+        <div class="container mt-3">
+            <h2 style="text-align: center" class="mb-5">Historial de planillas</h2>
+
+            <div class="row mt-3" th:if="${mensaje != null and !mensaje.empty }">
+
+                <div class="alert alert-warning alert-dismissible fade show col" role="alert">
+                    <span th:text="${mensaje}"></span> <!--obtiene el mensaje desde el modelo para mostrarlo en la vista-->
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+            </div>
+
+            <div class="row mt-3">
+                <div class="col">
+
+                    <form class="form-inline d-flex justify-content-around " method="Post" th:action="@{/buscarPlanilla}" >
+                        <div class="form-group mb-2">
+                            <label class="mr-3" for="fecha_planilla" >Periodo planilla:</label>
+                        </div>
+                        <div class="form-group mx-sm-3 mb-2 mr-3">
+                            <input type="month" th:name="fecha_planilla" class="form-control" id="inputPassword2" />
+                        </div>
+
+                        <div class="form-check mr-3">
+                            <input class="form-check-input" type="radio" th:name="tipo" id="exampleRadios1" value="1" />
+                            <label class="form-check-label" for="exampleRadios1">
+                                Planilla Ordinaria
+                            </label>
+                        </div>
+                        <div class="form-check mr-3">
+                            <input class="form-check-input" type="radio" th:name="tipo" id="exampleRadios2" value="0" />
+                            <label class="form-check-label" for="exampleRadios2">
+                                Planilla ExtraOrdinaria
+                            </label>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary mb-2 mr-3">Buscar Planilla</button>
+                        <!--<span class="font-italic text-danger mr-2" th:if="${#fields.hasErrors('fecha_planilla')}" th:errors="*{fecha_planilla}"></span> <!-- <!--AQUI SE VALIDA QUE EL TEXTO TENGA LOS CAMPOS CORRECTOS -->
+                    </form>
+                </div>
+            </div>
+
+            <hr/>
+
+            <div class="row mt-5" th:if="${mes != null and !mes.empty}">
+                <div class="col d-flex justify-content-center " th:if="${anio != null and !anio.empty}"  > 
+                    <h3 class="mr-3">Planilla</h3>
+                    <h3 th:text="${tipo}" class="mr-3"></h3>
+                    <h3 class="mr-3">del mes:</h3>
+                    <h3 th:text="${mes}" class="mr-3"></h3>
+                    <h3 class="mr-3">del año:</h3>
+                    <h3 class="mr-3" th:text="${anio}"></h3>
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                <div class="col">
+
+                    <div th:if="${detalles != null and !detalles.empty}" class="col"> <!--Se declara un if para poder ver si se va a cargar o no la tabla-->
+                        <table class="table table-hover">
+
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Nombre Cliente</th>
+                                    <th>Puesto</th>
+                                    <th>Salario Base</th>
+                                    <th>Salario Bruto</th><!-- comment -->
+                                    <th>Salario Neto</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr th:each="detalle:${detalles}"> <!--va a iterar con una variable cliente el arreglo clientes (por cada cliente muestrelo en la tabla)-->
+                                    <td th:text="${detalle.id_detalle_planilla}"></td>
+                                    <td th:text="${detalle.nombre_empleado}"></td>
+                                    <td th:text="${detalle.puesto}"></td>
+                                    <td th:text="${new java.text.DecimalFormat('#,##0.00').format(detalle.salario_base)}"></td>
+                                    <td th:text="${new java.text.DecimalFormat('#,##0.00').format(detalle.salario_bruto)}"></td>
+                                    <td th:text="${new java.text.DecimalFormat('#,##0.00').format(detalle.salario_neto)}"></td>
+                                    <td>
+                                        <a th:href="@{/verDetalles/} + ${detalle.id_detalle_planilla}" class="btn btn-link"><i class="fas fa-glasses"> Ver Detalles</i></a> <!toma el id del objeto que esta en la fila y lo pasa por parametro al controlador--> 
+                                    </td>
+                                </tr>
+                            </tbody>
+
+                        </table>
+                    </div>
+
+                    <div class="row mt-3" th:if="${mensajeEmpleados != null and !mensajeEmpleados.empty }">
+                        <div class="alert alert-warning alert-dismissible fade show col" role="alert">
+                            <span th:text="${mensajeEmpleados}"></span> <!--obtiene el mensaje desde el modelo para mostrarlo en la vista-->
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
+    </body>
+</html>

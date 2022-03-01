@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml">
+    <head th:replace="layout/plantilla ::head" >
+        <title>TODO supply a title</title>
+    </head>
+    <body>
+        <header th:replace="layout/plantilla ::header"></header>
+
+        <div class="container">
+
+            <div class="row mt-3" th:if="${mensaje != null and !mensaje.empty }">
+
+                <div class="alert alert-warning alert-dismissible fade show col" role="alert">
+                    <span th:text="${mensaje}"></span> <!--obtiene el mensaje desde el modelo para mostrarlo en la vista-->
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+            </div>
+
+
+            <div class="card-header">
+                <h2>Cálculo Planilla Extraordinaria</h2>
+            </div>
+
+            <div class="row  mt-3">
+                <div class="col">
+                    <p>
+                        Para calcular una planilla extraordinaria, primero es necesario buscar los empleados que no han sido añadidos en una planilla ordinaria, por lo tanto,
+                        se debe suministrar una fecha para poder verificar cuales empleados no están presentes en la planilla Ordinaria de esa fecha suministrada.
+                    </p>
+                </div>
+            </div>
+
+
+            <div class="row  mt-3" >
+                <div class="col-8">
+                    <form method="Post" th:action="@{/buscarEmpleadosNoOrdinario}" th:object="${planilla}" > <!-- AQUI ESTA EL LLAMADO AL CONTROLADOR  --> 
+                        <div class="input-group">
+                            <label class="mr-3" for="fecha_planilla" >Fecha planilla:</label>
+                            <input type="date" th:name="fecha_planilla" class="form-control mr-3" th:field="*{fecha_planilla}" /> 
+                            <span class="font-italic text-danger mr-2" th:if="${#fields.hasErrors('fecha_planilla')}" th:errors="*{fecha_planilla}"></span> <!-- <!--AQUI SE VALIDA QUE EL TEXTO TENGA LOS CAMPOS CORRECTOS -->
+                            <input type="submit" value="Cargar Empleados" class="btn btn-primary mr-3" />
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+
+
+            <div class="row  mt-3">
+                <div th:if="${empleados != null and !empleados.empty}" class="col"> <!--Se declara un if para poder ver si se va a cargar o no la tabla-->
+                    <table class="table table-hover">
+
+                        <thead>
+                            <tr>
+                                <th>Identificación</th>
+                                <th>Nombre Empleado</th>
+                                <th>Salario Base</th>
+                                <th>Nombre Puesto</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr th:each="empleado:${empleados}"> <!--va a iterar con una variable cliente el arreglo clientes (por cada cliente muestrelo en la tabla)-->
+                                <td th:text="${empleado.identificacion}"></td>
+                                <td th:text="${empleado.nombre + ' ' + empleado.apellido1 + ' ' + empleado.apellido2}"></td>
+                                <td th:text="${empleado.salario}"></td>
+                                <td th:text="${empleado.nombre_puesto}"></td> 
+                                <!--<td th:text="${new java.text.DecimalFormat('#,##0.00').format(cliente.limite_credito)}"></td>
+                                <td>
+                                    <a th:href="@{/editar/} + ${cliente.id_cliente}" class="btn btn-info"><i class="far fa-edit mr-2">Editar</i></a> | 
+                                    <a th:href="@{/eliminar(id_cliente=${cliente.id_cliente})}" class="btn btn-danger"><i class="fas fa-trash-alt mr-2"></i>Eliminar</a> <!toma el id del objeto que esta en la fila y lo pasa por parametro al controlador
+                                </td>-->
+                            </tr>
+                        </tbody>
+
+                    </table>
+
+                    <div class="mt-3">
+
+                        <form method="Post" th:action="@{/crearPlanilla}" th:object="${planilla}" > <!-- AQUI ESTA EL LLAMADO AL CONTROLADOR  --> 
+                            <div class="input-group">
+                                <input type="hidden" name="tipo" th:field="*{tipo}" />
+                                <input type="hidden" name="fecha_planilla" th:field="*{fecha_planilla}" /> <!-- con el asterisco accede a los datos del objeto cliente  -->
+                                <!--<span class="font-italic text-danger mr-2" th:if="${#fields.hasErrors('fecha_planilla')}" th:errors="*{fecha_planilla}"></span> <!-- AQUI SE VALIDA QUE EL TEXTO TENGA LOS CAMPOS CORRECTOS -->
+                                <input type="submit" value="Calcular Planilla ExtraOrdinaria" class="btn btn-primary mr-3" />
+                            </div>
+                        </form>
+
+                    </div>
+
+                </div>
+
+                <!--<div th:if="${empleados == null or empleados.empty}"><!--ESTE SERIA COMO EL ELSE DEL IF ANTERIOR
+                    <span th:text="${mensaje}"></span> <!--obtiene el mensaje desde el modelo para mostrarlo en la vista
+                </div>-->
+
+            </div>
+
+
+        </div>
+
+    </body>
+</html>

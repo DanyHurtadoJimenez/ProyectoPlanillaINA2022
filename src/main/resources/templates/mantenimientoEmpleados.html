@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml" >
+    <head th:replace="layout/plantilla ::head" >
+        <title>TODO supply a title</title>
+    </head>
+
+    <body>
+        <header th:replace="layout/plantilla ::header"></header>
+
+
+        <div class="container mt-4">
+            <div class="card-header">
+                <h2>Lista de Empleados</h2>
+            </div>
+            <div class="row  mt-3" >
+                <div class="col-8">
+                    <form method="post" th:action="@{/buscarEmpleado}"> <!--Se define la ruta del controlador el cual disparará la accion-->
+                        <div class="input-group">
+                            <input type="text" name="nombre" placeholder="Nombre o Apellido" class="form-control"/>
+                            <input type="submit" value="Buscar Empleado" class="btn btn-primary ml-2"/>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="col-4">
+                    <a class="btn btn-primary" th:href="@{/agregarEmpleado}" ><i class="fas fa-user-plus"></i> Agregar Empleado</a>  
+                </div>
+
+            </div>
+
+            <div class="row mt-3" th:if="${mensaje != null}"> <!--pregunta si el mensaje es nulo sino es nulo entonces muestra el div sino no-->
+
+                <div class="col">
+
+                    <div class="alert alert-info alert-dismissible fade show" role="alert">
+                        <span th:text="${mensaje}"></span> <!--obtiene el mensaje desde el modelo para mostrarlo en la vista-->
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="row  mt-3">
+                <div th:if="${empleados != null and !empleados.empty}" class="col"> <!--Se declara un if para poder ver si se va a cargar o no la tabla-->
+                    <table class="table table-hover">
+
+                        <thead>
+                            <tr>
+                                <th>Código</th>
+                                <th>Identificación</th>
+                                <th>Nombre Empleado</th>
+                                <th>Dirección</th>
+                                <th>Teléfono</th>
+                                <th>Email</th>
+                                <th>Fecha Ingreso</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr th:each="empleado:${empleados}"> <!--va a iterar con una variable cliente el arreglo clientes (por cada cliente muestrelo en la tabla)-->
+                                <td th:text="${empleado.id_empleado}"></td>
+                                <td th:text="${empleado.identificacion}"></td>
+                                <td th:text="${empleado.nombre + ' ' + empleado.apellido1 + ' ' + empleado.apellido2}"></td>
+                                <td th:text="${empleado.direccion}"></td>
+                                <td th:text="${empleado.telefono}"></td>
+                                <td th:text="${empleado.correo_electronico}"></td>
+                                <td th:text="${#dates.format(empleado.fecha_ingreso,'dd/MM/yyyy')}"></td>
+                                <td>
+                                    <!--<a th:href="@{/facturar/} + ${empleado.id_empleado}" class="btn btn-link"><i class="fas fa-money-check-alt mr-2"></i>Crear Factura</a>--> 
+                                    <a th:href="@{/editar/} + ${empleado.id_empleado}" class="btn btn-link"><i class="far fa-edit mr-2">Editar</i></a> 
+                                    <a th:href="@{/eliminar(id_cliente=${empleado.id_empleado})}" class="btn btn-link"><i class="fas fa-trash-alt mr-2"></i>Eliminar</a> <!toma el id del objeto que esta en la fila y lo pasa por parametro al controlador-->
+                                </td>
+                            </tr>
+                        </tbody>
+
+                    </table>
+                </div>
+
+                <div th:if="${empleados == null or empleados.empty}"><!--ESTE SERIA COMO EL ELSE DEL IF ANTERIOR-->
+                    <p class="alert alert-primary">No existen Empleados</p>
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </body>
+
+</html>

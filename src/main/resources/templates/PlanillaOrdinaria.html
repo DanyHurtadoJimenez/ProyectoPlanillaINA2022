@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml">
+    <head th:replace="layout/plantilla ::head">
+        <title>TODO supply a title</title>
+    </head>
+    <body>
+        <header th:replace="layout/plantilla ::header"></header>
+        <div class="container">
+            <div class="card-header">
+                <h2 style="text-align: center;">Cálculo de la planilla extraordinaria</h2>
+                <h6>Escoja la fecha en la que desea calcular la planilla ordinaria</h6>
+
+                <div class="row mt-3">
+
+                    <div class="col-8">
+
+                        <form method="Post" th:action="@{/crearPlanilla}" th:object="${planilla}" > <!-- AQUI ESTA EL LLAMADO AL CONTROLADOR  --> 
+                            <div class="input-group">
+                                <label class="mr-3" for="fecha_planilla" >Fecha planilla:</label>
+                                <input type="date" th:name="fecha_planilla" class="form-control mr-3" th:field="*{fecha_planilla}" /> 
+                                <span class="font-italic text-danger mr-2" th:if="${#fields.hasErrors('fecha_planilla')}" th:errors="*{fecha_planilla}"></span> <!-- <!--AQUI SE VALIDA QUE EL TEXTO TENGA LOS CAMPOS CORRECTOS -->
+                                <input type="submit" value="Calcular Planilla" class="btn btn-primary mr-3" />
+                            </div>
+                        </form>
+
+                    </div>
+
+                </div>
+
+                <div class="row mt-3" th:if="${mensaje != null and !mensaje.empty }">
+
+                    <div class="alert alert-warning alert-dismissible fade show col" role="alert">
+                        <span th:text="${mensaje}"></span> <!--obtiene el mensaje desde el modelo para mostrarlo en la vista-->
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </body>
+</html>

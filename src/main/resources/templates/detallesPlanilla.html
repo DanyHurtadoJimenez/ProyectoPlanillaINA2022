@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html xmlns:th="http://www.thymeleaf.org"                         
+      xmlns="http://www.w3.org/1999/xhtml" >
+    <head th:replace="layout/plantilla ::head" >
+        <title>TODO supply a title</title>
+    </head>
+    <body>
+
+        <header style="padding: 2%; background-color: #EEEDDE;"><h2 style="text-align: left text-align">Detalle de Planilla</h2></header>
+
+        <div class="container mt-3">
+
+            <div class="row">
+
+                <div class="col d-flex justify-content-around">
+                    <div class="input-group-prepend">
+                        <h4 class="" ><b>Codigo Empleado:</b></h4>
+                    </div>
+                    <h4 th:name="id_empleado" th:text="${id_empleado}" class="mr-2"></h4> <!-- CODIGO EMPLEADO -->
+
+                    <div class="input-group-prepend">
+                        <h4 class="" ><b>Nombre Empleado:</b></h4>
+                    </div>
+                    <h4 th:name="nombre_empleado" th:text="${nombre_empleado}" class="mr-2"></h4> <!-- NOMBRE EMPLEADO -->
+
+                    <div class="input-group-prepend">
+                        <h4 class="" ><b>Salario Base:</b></h4>
+                    </div>
+                    <h4 th:name="salario_base" th:text="${new java.text.DecimalFormat('#,##0.00').format(salario_base)}" class="mr-2"></h4> <!-- SALARIO BASE  th:text="${new java.text.DecimalFormat('#,##0.00').format(salario_base)}"  -->   
+
+                </div>
+
+            </div>    
+            <hr/>
+            <div class="row">
+                <div class="col d-flex justify-content-around">
+                    <div class="input-group-prepend">
+                        <h4 class="" ><b>Periodo Planilla:</b></h4>
+                    </div>
+                    <h4 th:name="mes" th:text="${mes + ' /'}"></h4>  <!-- MES PLANILLA -->
+                    <h4 th:name="mes" th:text="${anio}"class="mr-2"></h4> <!-- ANIO PLANILLA -->
+
+                    <div class="input-group-prepend">
+                        <h4 class="" ><b>Tipo Planilla:</b></h4>
+                    </div>
+                    <h4 th:name="tipo_planilla" th:text="${tipo_planilla}"class="mr-2"></h4> <!-- TIPO PLANILLA -->
+
+                    <div class="input-group-prepend">
+                        <h4 class="" ><b>Fecha Ingreso:</b></h4>
+                    </div>
+                    <h4 th:name="fecha_ingreso" th:text="${fecha_ingreso}"class="mr-2"></h4> <!-- FECHA INGRESO "${#dates.format(factura.fecha,'dd/MM/yyyy')}" -->   
+
+                </div>
+
+            </div>
+            <hr/>
+            <h3>Pagos</h3>
+            <div th:if="${detallesPago != null and !detallesPago.empty}">  <!-- Si hay productos entonces debe crear la tabla -->
+                <table class="table" id="tablaPagos">
+
+                    <thead>
+                        <tr>
+                            <th>Detalle del Pago</th>
+                            <th>Monto</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr th:each="pago:${detallesPago}"> <!-- Por cada articulos en producto va a hacer una columna itera  -->
+                            <td th:text="${pago.pago.descripcion_pago}" ></td>
+                            <td th:text="${new java.text.DecimalFormat('#,##0.00').format(pago.monto)}" ></td>   
+                        </tr>
+                    </tbody>
+
+                </table>
+
+                <div class="d-flex justify-content-end mt-2">
+                    <h4><b>Salario Bruto:  ₡ </b></h4>
+                    <h4 th:name="salario_bruto" th:text="${new java.text.DecimalFormat('#,##0.00').format(salario_bruto)}" class="mr-2"></h4> <!-- TIPO PLANILLA th:text="${new java.text.DecimalFormat('#,##0.00').format(salario_bruto)}" -->
+                </div>
+
+            </div>
+            <div th:if="${detallesPago == null and detallesPago.empty}"> <!-- Sino entonces debe mostrar este mensaje -->
+                <span>No se registran pagos</span>
+            </div>
+
+
+            <h3>Deducciones</h3>
+            <div th:if="${detallesDeducciones != null and !detallesDeducciones.empty}">  <!-- Si hay productos entonces debe crear la tabla -->
+                <table class="table" id="tablaDeducciones">
+
+                    <thead>
+                        <tr>
+                            <th>Detalle de la deduccion</th>
+                            <th>Monto</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr th:each="deduccion:${detallesDeducciones}"> <!-- Por cada articulos en producto va a hacer una columna itera  -->
+                            <td th:text="${deduccion.deduccion.descripcion_deduccion}" ></td>
+                            <td th:text="${new java.text.DecimalFormat('#,##0.00').format(deduccion.monto)}" ></td>    
+                        </tr>
+                    </tbody>
+
+                </table>
+
+                <div class="d-flex justify-content-end mt-2">
+                    <h4><b>Salario Neto:  ₡ </b></h4>
+                    <h4 th:name="salario_bruto" th:text="${new java.text.DecimalFormat('#,##0.00').format(salario_neto)}" class="mr-2"></h4> <!-- TIPO PLANILLA  th:text="${new java.text.DecimalFormat('#,##0.00').format(salario_neto)}" -->
+                </div>
+
+            </div>
+            <div th:if="${detallesDeducciones == null and detallesDeducciones.empty}"> <!-- Sino entonces debe mostrar este mensaje -->
+                <span>No se registran deducciones</span>
+            </div>
+
+            <form class="form-inline" method="Post" th:action="@{/buscarPlanilla}" >
+                <button type="submit" class="btn btn-primary mb-2 mr-3">Atrás</button>
+                <input type="hidden" th:name="fecha_planilla" th:value="${fecha_planilla}" class="form-control"/>
+                <input type="hidden" th:name="tipo" th:value="${tipo}" class="form-control"/>
+            </form>
+
+        </div>
+    </body>
+</html>

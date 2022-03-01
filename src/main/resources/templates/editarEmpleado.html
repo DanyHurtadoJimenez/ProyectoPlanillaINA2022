@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml" >
+    <head th:replace="layout/plantilla ::head" >
+        <title>TODO supply a title</title>
+    </head>
+    <body>
+
+        <header th:replace="layout/plantilla ::header"></header>
+
+        <section>
+            <div class="container mt-3">
+                <div class="col-10 mx-auto">
+                    <div class="card-header">
+                        <h2>Mantenimiento de Empleados</h2>
+                    </div>
+                    <div class="card-body">
+                        <form method="Post" th:action="@{/guardar}" th:object="${empleado}"> <!-- la accion del form sera ejecutar este controlador /guardar  -->
+                            <input type="hidden" name="id_empleado" th:field="*{id_empleado}" /> <!-- con el asterisco accede a los datos del objeto cliente  -->
+
+                            <div class="form-group">
+                                <label for="identificacion" class="form-label" >Identificación</label>
+                                <input type="number" maxlength="9" name="identificacion" class="form-control" th:field="*{identificacion}"/> <!-- con el asterisco accede a los datos del objeto cliente  -->
+                                <span class="font-italic text-danger" th:if="${#fields.hasErrors('identificacion')}" th:errors="*{identificacion}"></span> <!--AQUI SE VALIDA QUE EL TEXTO TENGA LOS CAMPOS CORRECTOS -->
+                            </div>
+
+                            <div class="form-group">
+                                <label for="nombre" class="form-label" >Nombre</label>
+                                <input type="text" maxlength="15" name="nombre" class="form-control" th:field="*{nombre}"/> <!-- con el asterisco accede a los datos del objeto cliente  -->
+                                <span class="font-italic text-danger" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></span> <!--AQUI SE VALIDA QUE EL TEXTO TENGA LOS CAMPOS CORRECTOS -->
+                            </div>
+
+                            <div class="form-group">
+                                <label for="apellido1" class="form-label" >Primer Apellido</label>
+                                <input type="text" maxlength="25" name="apellido1" class="form-control" th:field="*{apellido1}"/> <!-- con el asterisco accede a los datos del objeto cliente  -->
+                                <span class="font-italic text-danger" th:if="${#fields.hasErrors('apellido1')}" th:errors="*{apellido1}"></span> <!--AQUI SE VALIDA QUE EL TEXTO TENGA LOS CAMPOS CORRECTOS -->
+                            </div>
+
+                            <div class="form-group">
+                                <label for="apellido2" class="form-label" >Segundo Apellido</label>
+                                <input type="text" maxlength="25" name="apellido2" class="form-control" th:field="*{apellido2}"/> <!-- con el asterisco accede a los datos del objeto cliente  -->
+                            </div>
+
+                            <div class="form-group">
+                                <label for="direccion" class="form-label" >Dirección</label>
+                                <input type="text" maxlength="50" name="direccion" class="form-control" th:field="*{direccion}"/> <!-- con el asterisco accede a los datos del objeto cliente  -->
+                                <span class="font-italic text-danger" th:if="${#fields.hasErrors('direccion')}" th:errors="*{direccion}"></span> <!--AQUI SE VALIDA QUE EL TEXTO TENGA LOS CAMPOS CORRECTOS -->
+                            </div>
+
+                            <div class="form-group">
+                                <label for="telefono" class="form-label" >Teléfono</label>
+                                <input type="number" min="0" name="telefono" maxlength="8" class="form-control" th:field="*{telefono}"/> <!-- con el asterisco accede a los datos del objeto cliente  -->
+                                <span class="font-italic text-danger" th:if="${#fields.hasErrors('telefono')}" th:errors="*{telefono}"></span> <!--AQUI SE VALIDA QUE EL TEXTO TENGA LOS CAMPOS CORRECTOS -->
+                            </div>
+
+                            <div class="form-group">
+                                <label for="correo_electronico" class="form-label" >Email</label>
+                                <input type="text" maxlength="20" name="correo_electronico" class="form-control" th:field="*{correo_electronico}"/> <!-- con el asterisco accede a los datos del objeto cliente  -->
+                                <span class="font-italic text-danger" th:if="${#fields.hasErrors('correo_electronico')}" th:errors="*{correo_electronico}"></span> <!--AQUI SE VALIDA QUE EL TEXTO TENGA LOS CAMPOS CORRECTOS -->
+                            </div>
+
+                            <div class="form-group">
+                                <label for="fecha_ingreso" class="form-label" >Fecha Ingreso</label>
+                                <input type="date" name="fecha_ingreso" class="form-control" th:field="*{fecha_ingreso}"/> <!-- con el asterisco accede a los datos del objeto cliente  -->
+                                <span class="font-italic text-danger" th:if="${#fields.hasErrors('fecha_ingreso')}" th:errors="*{fecha_ingreso}"></span> <!--AQUI SE VALIDA QUE EL TEXTO TENGA LOS CAMPOS CORRECTOS -->
+                            </div>
+
+                            <div class="d-flex justify-content-between mt-5" >
+                                <a th:href="@{/empleados}" class="btn btn-secondary">Regresar</a> <!-- vuelve a cargar los clientes con el controlador  -->
+                                <input type="submit" value=" Guardar y asignar grados académicos" class="btn btn-primary" name="guardar"/>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+    </body>
+</html>
