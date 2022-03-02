@@ -26,6 +26,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                                 <label for="identificacion" class="form-label" >Identificación</label>
                                 <input type="number" maxlength="9" name="identificacion" class="form-control" th:field="*{identificacion}"/> <!-- con el asterisco accede a los datos del objeto cliente  -->
                                 <span class="font-italic text-danger" th:if="${#fields.hasErrors('identificacion')}" th:errors="*{identificacion}"></span> <!--AQUI SE VALIDA QUE EL TEXTO TENGA LOS CAMPOS CORRECTOS -->
+                                
                             </div>
 
                             <div class="form-group">

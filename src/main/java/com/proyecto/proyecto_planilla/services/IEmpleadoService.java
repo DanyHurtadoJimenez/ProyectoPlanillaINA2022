@@ -18,6 +18,8 @@ import java.util.List;
  */
 public interface IEmpleadoService {
 
+    Empleado obtenerEmpleado(long idEmpleado); //obtiene una entidad empleado
+
     public List<Empleado> listarEmpleados(boolean borrado); //OBTIENE TODO
 
     public List<Empleado> listarEmpleados(String nombre, boolean borrado); //FILTA POR CONDICION

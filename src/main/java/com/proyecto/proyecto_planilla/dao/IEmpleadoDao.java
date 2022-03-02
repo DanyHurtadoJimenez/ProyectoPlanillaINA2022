@@ -21,6 +21,8 @@ import org.springframework.data.repository.query.Param;
  * @author Dany
  */
 public interface IEmpleadoDao extends JpaRepository<Empleado, Long> {
+    
+    Empleado findById(long idEmpleado); //obtiene una entidad del empleado
 
     //este metodo permite buscar y devolver una lista con clientes que cumplan con las especificaciones como por ejemplo buscar por nombre o apellido
     public Iterable<Empleado> findByBorrado(boolean borrado);//asi se construye un metodo mas especifico que uno necesite para poder encontrar alguna cosa en la base de datos

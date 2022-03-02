@@ -41,15 +41,17 @@ public class Carrera_profesional {
     @NotNull(message = "El grado academico es requerido")
     private int grado_academico;
 
+    private String nombre_Grado_Academico;
+
     @JoinColumn(name = "id_empleado")
     @ManyToOne(optional = false) //relacion  obligatoria
     private Empleado empleado;
 
     //constructor
-  
     public Carrera_profesional() {
         this.nombre_certificado = "";
         this.nombre_institucion = "";
+        this.nombre_Grado_Academico = "";
         this.anio_graduacion = 0;
         this.grado_academico = 0;
     }
@@ -110,6 +112,14 @@ public class Carrera_profesional {
 
     public void setEmpleado(Empleado empleado) {
         this.empleado = empleado;
+    }
+
+    public String getNombre_Grado_Academico() {
+        return nombre_Grado_Academico;
+    }
+
+    public void setNombre_Grado_Academico(String nombre_Grado_Academico) {
+        this.nombre_Grado_Academico = nombre_Grado_Academico;
     }
 
     //metodos

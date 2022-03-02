@@ -41,10 +41,9 @@ public class EmpleadoService implements IEmpleadoService {
 
     @Override
     @Transactional
-    public Empleado guardar(Empleado empleado,Carrera_profesional titulos) {
+    public Empleado guardar(Empleado empleado, Carrera_profesional titulos) {
 
         //Empleado empleado = new Empleado(); //se declara el empleado que se va a devolver
-
         HashMap resultados = empleadoDao.guardar(empleado.getIdentificacion(),
                 empleado.getNombre(),
                 empleado.getApellido1(),
@@ -65,17 +64,10 @@ public class EmpleadoService implements IEmpleadoService {
         return empleado;
     }
 
-}
+    @Override
+    @Transactional
+    public Empleado obtenerEmpleado(long idEmpleado) { //obtiene una entidad empleado
+        return empleadoDao.findById(idEmpleado);
+    }
 
-//@Override
-//        @Transactional
-//        public Factura guardar(Factura factura) { //se ejecuta cada vez que aniade un producto a la venta y obtiene el id del producto para poder buscar el producto y obtener el precio y asignarlo a la factura
-//        Producto producto = productoDao.findById(factura.getId_producto()).orElse(null);
-//        if (producto != null) {
-//            factura.setPrecioVenta(producto.getPrecio()); //esto se puede realizar desde el procedimiento para evitar hacerlo aqui
-//        }
-//        HashMap resultado = ventasDao.facturar(factura.getTipo(), factura.getId_cliente(), factura.getId_producto(), factura.getCantidad(), factura.getPrecioVenta(), factura.getId_venta(), factura.getRetorno());//manda a ejecutar el procedimiento almaacenado
-//        factura.setId_venta((long) resultado.get("ID_VENTA"));//obtiene el parametro de salida y lo setea en la factura id_producto
-//        factura.setRetorno((int) resultado.get("retorno"));//
-//        return factura;
-//    }
+}
