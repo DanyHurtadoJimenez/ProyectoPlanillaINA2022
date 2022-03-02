@@ -26,4 +26,6 @@ public interface IEmpleadoService {
 
     public Empleado guardar(Empleado empleado, Carrera_profesional titulos);
 
+    public Empleado save(Empleado empleado);
+
 }

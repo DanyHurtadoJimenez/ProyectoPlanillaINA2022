@@ -22,5 +22,7 @@ public interface ICarreraProfesionalDao extends JpaRepository<Carrera_profesiona
 
     @Query(value = "select Id_Empleado from TBL_CARRERA_PROFESIONAL where Id_Carrera_P = ?1", nativeQuery = true)
     public Integer findByNative(int id_carrera_p);
+    
+    
 
 }

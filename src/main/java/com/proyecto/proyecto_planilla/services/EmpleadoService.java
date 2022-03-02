@@ -70,4 +70,9 @@ public class EmpleadoService implements IEmpleadoService {
         return empleadoDao.findById(idEmpleado);
     }
 
+    @Override
+    public Empleado save(Empleado empleado) {
+        return empleadoDao.save(empleado);
+    }
+
 }

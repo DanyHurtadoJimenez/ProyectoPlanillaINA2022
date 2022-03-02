@@ -87,8 +87,9 @@ public class EmpleadoController {
         if (errors.hasErrors()) { //si hay errores mejor devuelvame a lo de editar cliente
             return "editarEmpleado";
         }
-        serviceEmpleado.guardar(empleado, titulos); //ejecuta el sp mandando la entidad empleado y la entidad titulos
-
+        //serviceEmpleado.guardar(empleado, titulos); //ejecuta el sp mandando la entidad empleado y la entidad titulos
+        serviceEmpleado.save(empleado);
+        
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy"); //formatea la fecha
         String fecha_ingreso = sdf.format(empleado.getFecha_ingreso());
 
@@ -101,66 +102,7 @@ public class EmpleadoController {
 
     }
 
-    @PostMapping("/guardarInfoAcademica")
-    public String guardarInfoAcademica(Carrera_profesional titulos, String id_empleado, Model modelo) { //el cliente lo obtiene de todos los campos de texto del formulario, y lo llena para poder guardarlo en el siguiente metodo se hace de manera automatica con el validation permite verificar primero si el objeto es valido para poder guardarlo
-        String mensaje;
-        //if (errors.hasErrors()) { //si hay errores mejor devuelvame a lo de editar cliente
-//            if (titulos.getNombre_certificado().equals("") && titulos.getNombre_institucion().equals("")) {
-//                mensaje = "Debe completar los campos que componen la informacion de los titulos";
-//                modelo.addAttribute("mensaje", mensaje);
-//            }
-//            return "infoAcademica";
-        //}
-        Empleado empleado = serviceEmpleado.obtenerEmpleado(Long.parseLong(id_empleado)); //obtiene la entidad cliente que pertenece a ese 
-        serviceEmpleado.guardar(empleado, titulos); //ejecuta el sp mandando la entidad empleado y la entidad titulos
-        List<Carrera_profesional> diplomas = serviceCarreraP.obtenerTitulos((int) empleado.getId_empleado());//se obtienen los titulos del empleado
-        nombrarGrado(diplomas); //pone el nombre del gradoacademico
-        
-        
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy"); //formatea la fecha
-        String fecha_ingreso = sdf.format(empleado.getFecha_ingreso());
 
-        titulos.setNombre_certificado(""); //VACIA LOS CAMPOS
-        titulos.setAnio_graduacion(0);
-        titulos.setNombre_institucion("");
-
-        modelo.addAttribute("id_empleado", empleado.getId_empleado());
-        modelo.addAttribute("nombre_empleado", empleado.getNombre() + " " + empleado.getApellido1() + " " + empleado.getApellido2());
-        modelo.addAttribute("fecha_ingreso", fecha_ingreso);
-        modelo.addAttribute("titulos", titulos);
-        modelo.addAttribute("diplomas", diplomas);
-
-        return "infoAcademica"; //abre la ventana de informacion academica
-
-    }
-
-    private void nombrarGrado(List<Carrera_profesional> titulos) {
-
-        for (int i = 0; i < titulos.size(); i++) {
-
-            switch (titulos.get(i).getGrado_academico()) {
-                case 1:
-                    titulos.get(i).setNombre_Grado_Academico("Técnico");
-                    break;
-                case 2:
-                    titulos.get(i).setNombre_Grado_Academico("Diplomado");
-                    break;
-                case 3:
-                    titulos.get(i).setNombre_Grado_Academico("Bachillerato");
-                    break;
-                case 4:
-                    titulos.get(i).setNombre_Grado_Academico("Licenciatura");
-                    break;
-                case 5:
-                    titulos.get(i).setNombre_Grado_Academico("Posgrado");
-                    break;
-                default:
-                    throw new AssertionError();
-            }
-
-        }
-
-    }
     
     
     

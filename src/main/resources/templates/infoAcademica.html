@@ -16,23 +16,6 @@ and open the template in the editor.
             <h1 class="display-3 mb-5" style="text-align: center">Preparación Acádemica</h1>
             <div class="row mt-3" >
 
-
-                <div class="row mt-3" th:if="${mensaje != null}"> <!--pregunta si el mensaje es nulo sino es nulo entonces muestra el div sino no-->
-
-                    <div class="col">
-
-                        <div class="alert alert-info alert-dismissible fade show" role="alert">
-                            <span th:text="${mensaje}"></span> <!--obtiene el mensaje desde el modelo para mostrarlo en la vista-->
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-
-                    </div>
-
-                </div>
-
-
                 <div class="col d-flex justify-content-around">
                     <div class="input-group-prepend">
                         <h4 class="" ><b>Codigo Empleado:</b></h4>
@@ -59,11 +42,11 @@ and open the template in the editor.
                         <div class="form-row">
                             <div class="col">
                                 <input type="hidden" th:name="id_empleado" th:value="${id_empleado}" />
-                                <input type="text" maxlength="25" name="nombre_certificado" class="form-control" th:field="*{nombre_certificado}" placeholder="Título Obtenido"/>
+                                <input type="text" maxlength="25" name="nombre_certificado" class="form-control" th:field="*{nombre_certificado}" placeholder="Título Obtenido" required="true" />
                             </div>
                             <span class="font-italic text-danger" th:if="${#fields.hasErrors('nombre_certificado')}" th:errors="*{nombre_certificado}"></span>
                             <div class="col">
-                                <input type="text" maxlength="25" name="nombre_institucion" class="form-control" th:field="*{nombre_institucion}" placeholder="Nombre Institución"/>
+                                <input type="text" maxlength="25" name="nombre_institucion" class="form-control" th:field="*{nombre_institucion}" placeholder="Nombre Institución" required="true"/>
 
                             </div>
                             <span class="font-italic text-danger" th:if="${#fields.hasErrors('nombre_institucion')}" th:errors="*{nombre_institucion}"></span>
@@ -74,7 +57,7 @@ and open the template in the editor.
                                 <label for="grado_academico" class="form-label mr-5" >Año de Graduación:</label>
                             </div>
                             <div class="col">
-                                <input type="number" min="0" name="anio_graduacion" class="form-control" th:field="*{anio_graduacion}" placeholder="Año Graduación"/>
+                                <input type="number" min="0" maxlength="4" name="anio_graduacion" class="form-control" th:field="*{anio_graduacion}" placeholder="Año Graduación" required="true" />
                             </div>
                             <div class="col">
                                 <label for="grado_academico" class="form-label mr-5" >Grado Académico:</label>
@@ -120,9 +103,7 @@ and open the template in the editor.
                                 <td th:text="${item.nombre_Grado_Academico}"></td>
                                 <td th:text="${item.anio_graduacion}"></td>
                                 <td >
-                                    <a th:href="@{/eliminarTitulo/} + ${item.id_carrera_p}" class="btn btn-info"><i class="far fa-edit mr-2">Eliminar</i></a>
-                                        <i class="far fa-trash-alt"></i> Eliminar
-                                    </a>
+                                    <a th:href="@{/eliminarTitulo/} + ${item.id_carrera_p}" class="btn btn-link"><i class="far fa-trash-alt"> Eliminar</i></a>
                                 </td>
                             </tr>
                         </tbody>
@@ -137,7 +118,6 @@ and open the template in the editor.
             </div>
 
         </div>
-
 
     </body>
 </html>

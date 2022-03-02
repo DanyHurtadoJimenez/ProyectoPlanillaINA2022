@@ -97,7 +97,7 @@ public class Empleado implements Serializable {
 
     private int puntos_carrera_pro;
 
-    private int grado_academico;
+    private int grado_academico = 1;
 
     private int retorno = 0;//se usa para guardar el retorno a la hora de ejecutar el procedimiento almacenado de guardar empleado
 

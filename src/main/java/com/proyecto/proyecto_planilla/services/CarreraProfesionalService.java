@@ -35,4 +35,9 @@ public class CarreraProfesionalService implements ICarreraProfesionalService {
         return carreraPDao.findByNative(id_carrera_p);
     }
 
+    @Override
+    public Carrera_profesional guardarTitulo(Carrera_profesional titulo) {
+        return carreraPDao.save(titulo);
+    }
+
 }
